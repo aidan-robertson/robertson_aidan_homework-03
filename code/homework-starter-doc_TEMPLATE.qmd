@@ -212,6 +212,15 @@ plot(model3)
 ```
 **look at diagnostics**
 
+## 4. total biomass as a function of water treatment and species
+
+```{r}
+model4 <- lm(total_g ~ water_treatment + species_name,
+             data = drought_exp_clean)
+
+plot(model4)
+```
+
 # Model selection
 
 From the `MuMIn` package
@@ -220,19 +229,20 @@ From the `MuMIn` package
 model.sel(model0,
           model1, 
           model2, 
-          model3)
+          model3,
+          model4)
 ```
 
 Out of the four models we have tried, the best model is the one that includes **specific leaf area, water treatment, and species (saturated model)**
 
 Note that this may change once you fit and compare the other model!
 
-**double check diagnostics for best model yay**
+**adding model 4, water treatment and species is the best model**
 
 # Model summary
 
 ```{r}
-summary(model1)
+summary(model4)
 ```
 
 What are the reference levels?
@@ -256,13 +266,13 @@ Interpret the model estimates for the:
 **Note:** only plot terms in the model you select - if your doesn't include one of these terms, take it out and adjust the plotting code accordingly!
 
 ```{r}
-model_preds <- ggpredict(model1, 
-                         terms = c("sla",
-                                   "water_treatment", 
+model_preds <- ggpredict(model4, 
+                         terms = c("water_treatment", 
                                    "species_name"))
 
 # use View(model_preds) to see the predictions as a data frame
 # use model_preds to see the predictions formatted nicely
+View(model_preds)
 ```
 
 # Visualization
@@ -285,32 +295,31 @@ The "more customizable" way:
 ```{r}
 # creating new data frame of model predictions for plotting
 model_preds_for_plotting <- model_preds %>% 
-  rename(sla = x, # renaming columns to make this easier to use
-         water_treatment = group,
-         species_name = facet)
+  rename(water_treatment = x,
+         species_name = group) # renaming columns to make this easier to use
 
-# use View(model_preds_for_plotting) 
+View(model_preds_for_plotting) 
 # to compare this to the original model_preds data frame
 
 ggplot() +
   # underlying data
   geom_point(data = drought_exp_clean,
-             aes(x = sla,
+             aes(x = water_treatment,
                  y = total_g,
-                 color = water_treatment)) +
+                 color = species)) +
   # model prediction 95% CI ribbon
-  geom_ribbon(data = model_preds_for_plotting,
-              aes(x = sla, 
-                  y = predicted,
-                  ymin = conf.low,
-                  ymax = conf.high,
-                  fill = water_treatment),
-              alpha = 0.2) +
-  # model prediction lines
-  geom_line(data = model_preds_for_plotting,
-            aes(x = sla, 
-                y = predicted,
-                color = water_treatment)) +
+  # geom_ribbon(data = model_preds_for_plotting,
+  #             aes(x = sla, 
+  #                 y = predicted,
+  #                 ymin = conf.low,
+  #                 ymax = conf.high,
+  #                 fill = water_treatment),
+  #             alpha = 0.2) +
+  # # model prediction lines
+  # geom_line(data = model_preds_for_plotting,
+  #           aes(x = sla, 
+  #               y = predicted,
+  #               color = water_treatment)) +
   # cleaner theme
   theme_classic() +
   # creating different panels for species
@@ -321,10 +330,10 @@ ggplot() +
 
 ```{r}
 # one option for a single model
-flextable::as_flextable(model1) 
+flextable::as_flextable(model4) 
 
 # another option for a single model
-gtsummary::tbl_regression(model1)
+gtsummary::tbl_regression(model4)
 
 # comparing models
 modelsummary::modelsummary( # this function takes a list of models
@@ -332,9 +341,8 @@ modelsummary::modelsummary( # this function takes a list of models
     "null" = model0, # "model name" = model object
     "model 1" = model1,
     "model 2" = model2,
-    "model 3" = model3
-  )
-) 
+    "model 3" = model3,
+    "model 4" = model4)) 
 
 ```
 
