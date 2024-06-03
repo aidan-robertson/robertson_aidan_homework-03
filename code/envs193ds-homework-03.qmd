@@ -50,7 +50,7 @@ modelsummary::modelsummary( # list of all models (null, saturated, sla/water tre
 ```
 
 ## b. statistical methods
-
+In exploring how to best predict total biomass of plants, I created 5 linear models with different combinations of potential influential variables - specific leaf area (sla), water treatment, and species. To determine the model that best described total plant biomass, I first created models for each combination of variables (none, all, sla-water treatment, sla-species, and species-water treatment) and then compared the models using the Akaike Information Criterion (AIC) to determine which had the closest fit to the data. The model with the lowest reported AIC was one that used species and water treatment to predict plant biomass. To make sure this model conformed to linear model assumptions, I looked at it's diagnostics
 
 ## c. best model visualization
 
