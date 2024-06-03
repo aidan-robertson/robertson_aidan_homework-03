@@ -46,7 +46,7 @@ library(flextable)
 library(modelsummary)
 
 drought_exp <- read_xlsx(path = here("data", 
-                                     "Valliere_etal_EcoApps_Data.xlsx"),
+                        "Valliere_etal_EcoApps_Data.xlsx"),
                          sheet = "First Harvest")
 # here function refers you to a specific folder and pick a specific file within a sheet
 
@@ -330,10 +330,10 @@ ggplot() +
 
 ```{r}
 # one option for a single model
-flextable::as_flextable(model4) 
+# flextable::as_flextable(model4) 
 
 # another option for a single model
-gtsummary::tbl_regression(model4)
+# gtsummary::tbl_regression(model4)
 
 # comparing models
 modelsummary::modelsummary( # this function takes a list of models
@@ -342,7 +342,9 @@ modelsummary::modelsummary( # this function takes a list of models
     "model 1" = model1,
     "model 2" = model2,
     "model 3" = model3,
-    "model 4" = model4)) 
+    "model 4" = model4),
+  output = "flextable") 
+
 
 ```
 

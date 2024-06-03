@@ -4,3 +4,76 @@ date: 2024-05-31
 author: "Aidan Robertson
 format: pdf
 ---
+
+## [Forked repository](https://github.com/aidan-robertson/robertson_aidan_homework-03)
+
+# Set-up
+
+## reading in data & packages
+
+```{r}
+#| message: false
+# general use
+library(tidyverse)
+library(readxl)
+library(here)
+library(janitor)
+
+# visualizing pairs
+library(GGally)
+
+# model selection
+library(MuMIn)
+
+# model predictions
+library(ggeffects)
+
+# model tables
+library(gtsummary)
+library(flextable)
+library(modelsummary)
+```
+
+# Problem 1. Multiple linear regression: model selection & construction
+
+## a. table of models
+```{r}
+modelsummary::modelsummary( # list of all models (null, saturated, sla/water treatment, sla/species, species/water treatment)
+  list( 
+    "null" = model0,
+    "model 1" = model1,
+    "model 2" = model2,
+    "model 3" = model3,
+    "model 4" = model4),
+  output = "flextable", # display as flextable
+  gof_omit = "^(?!.*IC)") # keep only AIC and BIC statistics
+```
+
+## b. statistical methods
+
+
+## c. best model visualization
+
+## d. caption
+
+## e. results
+
+# Problem 2. Affective visualization
+
+## a. description of an aggective visualization
+
+## b. sketch of idea
+
+## c. draft of visualization
+
+## d. artist statement
+
+## Problem 3. Statistical critique
+
+## a. revisit and summarize
+
+## b. visual clarity
+
+## c. aesthetic clarity
+
+## d. recommendations
