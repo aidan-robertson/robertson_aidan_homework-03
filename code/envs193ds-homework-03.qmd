@@ -106,11 +106,19 @@ I found that species and water treatment best describe the total plant biomass u
 
 ## a. description of an affective visualization
 
+An affective visualization for my data could display my observations in the form of a quilt in some fashion. Quilts are a motif found throughout the SRB, both in decoration and design, so incorporating a quilt would be able to reflect those ideas. Since I don't have quilting experience, I could either draw this idea or create a quilt mock-up of what it could potentially look like.
+
 ## b. sketch of idea
+
+![](images/20240604_044624.jpg){fig-align="center" width="913"}
 
 ## c. draft of visualization
 
+![](images/srb quilt.png){fig-align="center"}
+
 ## d. artist statement
+
+This is a mock-up of a quilt depicting the reasons people visited the Student Resource Building during times I was working throughout the quarter, acting as a timeline of students' needs. It is modified percentage bar chart, with each square on the bottom of the quilt representing a week, and each color representing a different reason for approaching the desk. This was inspired by the creation of the SRB, which was built around the idea of "quilting together" different communities and cultures on campus. This is a motif that is present in the construction of the building, as well as the decorations, as there are many quilts on the walls of the building. To create my work, I used a quilt mock-up website, but I would love to be able to turn this mock-up into a reality.
 
 # Problem 3. Statistical critique
 

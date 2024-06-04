@@ -244,8 +244,12 @@ Note that this may change once you fit and compare the other model!
 ```{r}
 summary(model4)
 ```
-total plant biomass = 0.05 + 0.12(water treatment) + 0.22(encelia californica) + 0.23(eschscholzia californica) + 0.23(grindelia camporum) + 0.23(nasella pulchra) + 0.05(penstemon centranthifolius) + 0.12(salvia leucophylla)
-F(7, 62) = 27.08, p < 0.001, alpha = 0.05, adjusted R^2^ = 0.73
+total plant biomass = 0.055 + 0.117(water treatment) + 0.218(encelia californica) + 0.232(eschscholzia californica) + 0.313(grindelia camporum) + 0.229(nasella pulchra) + 0.050(penstemon centranthifolius) + 0.120(salvia leucophylla)
+
+F(7, 62) = 27.08, p < 0.001, ⍺ = 0.05, adjusted R^2^ = 0.726
+
+If species stays the same, well watered plants have a plant biomass that is 0.117 ± 0.017 grams greater in comparison to drought stressed plants.
+
 What are the reference levels?
 
 -   reference for `water_treatment`\
