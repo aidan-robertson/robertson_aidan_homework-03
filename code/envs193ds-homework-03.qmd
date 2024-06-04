@@ -114,18 +114,28 @@ An affective visualization for my data could display my observations in the form
 
 ## c. draft of visualization
 
-![](images/srb quilt.png){fig-align="center"}
+![](images/srb%20quilt.png){fig-align="center"}
 
 ## d. artist statement
 
-This is a mock-up of a quilt depicting the reasons people visited the Student Resource Building during times I was working throughout the quarter, acting as a timeline of students' needs. It is modified percentage bar chart, with each square on the bottom of the quilt representing a week, and each color representing a different reason for approaching the desk. This was inspired by the creation of the SRB, which was built around the idea of "quilting together" different communities and cultures on campus. This is a motif that is present in the construction of the building, as well as the decorations, as there are many quilts on the walls of the building. To create my work, I used a quilt mock-up website, but I would love to be able to turn this mock-up into a reality.
+This is a mock-up of a quilt depicting the reasons people visited the Student Resource Building during times I was working throughout the quarter, acting as a timeline of students' needs. It is modified percentage bar chart, with each square on the bottom of the quilt representing a week, and each color representing a different reason for approaching the desk. This was inspired by the creation of the SRB, which was built around the idea of "quilting together" different communities and cultures on campus. This is a motif that is present in the construction of the building, as well as the decorations, as there are many quilts on the walls of the building which I was inspired by. To create my work, I used a quilt mock-up website, where I followed the general form of a bar chart that I created in R, connecting "weeks" to one another to create a somewhat seamless quilt.
 
 # Problem 3. Statistical critique
 
 ## a. revisit and summarize
 
+The authors conducted many statistical analyses, including finding the mean and standard error for different plots and treatments, conducting two- and three-way ANOVAs, least significant differences, and a linear mixed model. The central question of this paper analyzed the impact of fencing compared to grazing in four grassland types in China. In Homework 2, I described a figure depicting these variables' impacts on percent cover, aboveground biomass, litter biomass, and species richness, using mean and standard error.
+
+![](images/Screenshot 2024-04-24 220834.png){fig-align="center"}
+
 ## b. visual clarity
+
+For the most part, this figure is visually clear, as it shows a clear comparison between the grazing-fencing treatment in each grassland type, and shows which grasslands these treatments were most effective in. The means and standard error are depicted in the figure, and the scale of each y-axis shows the difference between treatments. The underlying data is not present alongside the summary statistics.
 
 ## c. aesthetic clarity
 
+This figure was initially a little difficult for me to understand, as there is a lot of visual clutter, like with the asterisks and letters above each bar. The letters are supposed to represent statistically significant differences between treatments, but this attribute isn't very clearly explained. The separation between each figure, grassland type, and treatment within this figure are very clear, and easy to understand, which helps with the aesthetics of the figure.
+
 ## d. recommendations
+
+I would first recommend that the authors remove the letters from the tops of each bar. Removing this visual clutter will improve the data-ink ratio, and create a more seamless and easily understood figure. I think that noting significant differences can be done in a later analysis, or by keeping the asterisks. If the authors are willing to stray from the bar chart, I would recommend that they plot their data using a dot-whisker plot to show the mean and standard error, and include the underlying data. This will allow for data transparency, and show the trends in data alongside the calculated statistics.
