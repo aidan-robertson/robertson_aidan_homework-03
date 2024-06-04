@@ -1,7 +1,7 @@
 ---
 title: "ENV S 193DS Homework 3"
 date: 2024-05-31
-author: "Aidan Robertson
+author: "Aidan Robertson"
 format: pdf
 ---
 
@@ -37,6 +37,7 @@ library(modelsummary)
 # Problem 1. Multiple linear regression: model selection & construction
 
 ## a. table of models
+
 ```{r}
 modelsummary::modelsummary( # list of all models (null, saturated, sla/water treatment, sla/species, species/water treatment)
   list( 
@@ -49,18 +50,61 @@ modelsummary::modelsummary( # list of all models (null, saturated, sla/water tre
   gof_omit = "^(?!.*IC)") # keep only AIC and BIC statistics
 ```
 
+**Table 1. Comparing models predicting total biomass of plants.** This table depicts the predictor values for 5 different models with different combinations of the potential predictor values of specific leaf area, species, and water treatment.
+
 ## b. statistical methods
-In exploring how to best predict total biomass of plants, I created 5 linear models with different combinations of potential influential variables - specific leaf area (sla), water treatment, and species. To determine the model that best described total plant biomass, I first created models for each combination of variables (none, all, sla-water treatment, sla-species, and species-water treatment) and then compared the models using the Akaike Information Criterion (AIC) to determine which had the closest fit to the data. The model with the lowest reported AIC was one that used species and water treatment to predict plant biomass. To make sure this model conformed to linear model assumptions, I looked at it's diagnostics
+
+In exploring how to best predict total biomass of plants, I created 5 linear models with different combinations of potential influential variables - specific leaf area (sla), water treatment, and species. To determine the model that best described total plant biomass, I first created models for each combination of variables: none (null model), all (saturated, model 1), sla-water treatment (model 2), sla-species (model 3), and species-water treatment (model 4). Then, I compared the models using the Akaike Information Criterion (AIC) to determine which had the closest fit to the data. The model with the lowest reported AIC was one that used species and water treatment to predict plant biomass. To make sure this model conformed to linear model assumptions, I looked at it's diagnostic plots which confirmed that this data's residuals are homoscedastic and relatively normal, without any major outliers. Because this model meets linear model assumptions and has the lowest AIC in comparison to other models, I determined that species and water treatment are the best variables in a model prediction of total biomass of plants.
 
 ## c. best model visualization
 
+```{r}
+ggplot() +
+  # model prediction
+  geom_point(data = model_preds_for_plotting,
+             aes(x = water_treatment,
+                 y = predicted,
+                 group = species_name,
+                 color = water_treatment,),
+             size = 2) +
+  # 95% confidence interval
+  geom_errorbar(data = model_preds_for_plotting,
+              aes(x = water_treatment,
+                  y = predicted,
+                  ymin = conf.low,
+                  ymax = conf.high,
+                  color = water_treatment),
+              width = 0) +
+  # underlying data
+  geom_point(data = drought_exp_clean,
+             aes(x = water_treatment,
+                 y = total_g,
+                 color = water_treatment),
+                  alpha = 0.1,
+             size = 2) +
+  # creating different panels for species
+  facet_wrap(~species_name) +
+  # cleaner theme & finalizing
+  theme_classic() +
+   scale_color_manual(values = c("#A8BE74FF", "#BF7417FF")) +
+  labs(title = "Species and water treatment linear model", # title of plot
+       x = "Water treatment", # x-axis name
+       y = "Total biomass (g)") + # y-axis name
+ theme(legend.position = "none")
+  
+```
+
 ## d. caption
+
+**Figure 1. Linear model to predict total plant biomass uses water treatment and species.** Data from: 'Can we condition native plants to increase drought tolerance and improve restoration success?' (Dryad, Valliere J, et al., 2019). This figure uses a linear model to predict the total plant biomass (g) for each plant species based on water treatment. Each graph depicts the predicted biomass, its corresponding 95% confidence interval, and underlying data for its titled species. Color distinguishes different water treatments (green: well watered, orange: drought stressed).
 
 ## e. results
 
+I found that species and water treatment best describe the total plant biomass using a multiple linear regression model (F(7, 62) = 27.08, p \< 0.001, ⍺ = 0.05, adjusted R^2^ = 0.726). In this model, total plant biomass = 0.055 + 0.117(water treatment) + 0.218(encelia californica) + 0.232(eschscholzia californica) + 0.313(grindelia camporum) + 0.229(nasella pulchra) + 0.050(penstemon centranthifolius) + 0.120(salvia leucophylla). On average, if species stays the same, well watered plants have a plant biomass that is 0.117 ± 0.017 grams greater in comparison to drought stressed plants. If water treatment stays constant, then compared to acmispon glaber: total plant biomass is 0.218 ± 0.032 grams greater for encelia californica, 0.232 ± 0.032 grams greater for eschscholzia californica, 0.313 ± 0.032 grams greater for grindelia camporum, 0.229 ± 0.032 grams greater for nasella pulchra, 0.050 ± 0.032 grams greater for penstemon centranthifolius, and 0.120 ± 0.032 grams greater for salvia leucophylla.
+
 # Problem 2. Affective visualization
 
-## a. description of an aggective visualization
+## a. description of an affective visualization
 
 ## b. sketch of idea
 
@@ -68,7 +112,7 @@ In exploring how to best predict total biomass of plants, I created 5 linear mod
 
 ## d. artist statement
 
-## Problem 3. Statistical critique
+# Problem 3. Statistical critique
 
 ## a. revisit and summarize
 
