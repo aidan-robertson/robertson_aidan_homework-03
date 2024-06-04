@@ -2,7 +2,7 @@
 title: "ENV S 193DS Homework 3"
 date: 2024-05-31
 author: "Aidan Robertson"
-format: pdf
+format: docx
 ---
 
 ## [Forked repository](https://github.com/aidan-robertson/robertson_aidan_homework-03)
@@ -34,13 +34,75 @@ library(flextable)
 library(modelsummary)
 ```
 
+## loading in models
+```{r}
+#| message: false
+# loading in data
+drought_exp <- read_xlsx(path = here("data", 
+                        "Valliere_etal_EcoApps_Data.xlsx"),
+                         sheet = "First Harvest")
+# cleaning up data
+drought_exp_clean <- drought_exp %>% 
+  clean_names() %>% # nicer column names
+  mutate(species_name = case_when( # adding column with species scientific names
+    species == "ENCCAL" ~ "Encelia californica", # bush sunflower
+    species == "ESCCAL" ~ "Eschscholzia californica", # California poppy
+    species == "PENCEN" ~ "Penstemon centranthifolius", # Scarlet bugler
+    species == "GRICAM" ~ "Grindelia camporum", # great valley gumweed
+    species == "SALLEU" ~ "Salvia leucophylla", # Purple sage
+    species == "STIPUL" ~ "Nasella pulchra", # Purple needlegrass
+    species == "LOTSCO" ~ "Acmispon glaber" # deerweed
+  )) %>% 
+  relocate(species_name, .after = species) %>% # moving species_name column after species
+  mutate(water_treatment = case_when( # adding column with full treatment names
+    water == "WW" ~ "Well watered",
+    water == "DS" ~ "Drought stressed"
+  )) %>% 
+  relocate(water_treatment, .after = water) # moving water_treatment column after water
+
+# making models!
+# model 0 - null
+model0 <- lm(total_g ~ 1, # formula
+             data = drought_exp_clean) # data frame
+
+# model 1 - saturated
+model1 <- lm(total_g ~ sla + water_treatment + species_name,
+             data = drought_exp_clean)
+
+# model 2 - sla-water treatment
+model2 <- lm(total_g ~ sla + water_treatment,
+             data = drought_exp_clean)
+
+# model 3 - sla-species
+model3 <- lm(total_g ~ sla + species_name,
+             data = drought_exp_clean)
+
+# model 4 - water treatment-species
+model4 <- lm(total_g ~ water_treatment + species_name,
+             data = drought_exp_clean)
+```
+
+## creating dataframes for plotting
+```{r}
+# model 4 predictors
+model_preds <- ggpredict(model4, 
+                         terms = c("water_treatment", 
+                                   "species_name"))
+
+# renaming columns for easier use
+model_preds_for_plotting <- model_preds %>% 
+  rename(water_treatment = x,
+         species_name = group) 
+```
+
+
 # Problem 1. Multiple linear regression: model selection & construction
 
 ## a. table of models
 
 ```{r}
 modelsummary::modelsummary( # list of all models (null, saturated, sla/water treatment, sla/species, species/water treatment)
-  list( 
+  list(
     "null" = model0,
     "model 1" = model1,
     "model 2" = model2,
@@ -61,37 +123,40 @@ In exploring how to best predict total biomass of plants, I created 5 linear mod
 ```{r}
 ggplot() +
   # model prediction
-  geom_point(data = model_preds_for_plotting,
-             aes(x = water_treatment,
-                 y = predicted,
-                 group = species_name,
-                 color = water_treatment,),
-             size = 2) +
+  geom_point(
+    data = model_preds_for_plotting,
+    aes(
+      x = water_treatment,
+      y = predicted,
+      group = species_name,
+      color = water_treatment),
+    size = 2) +
   # 95% confidence interval
-  geom_errorbar(data = model_preds_for_plotting,
-              aes(x = water_treatment,
-                  y = predicted,
-                  ymin = conf.low,
-                  ymax = conf.high,
-                  color = water_treatment),
-              width = 0) +
+  geom_errorbar(
+    data = model_preds_for_plotting,
+    aes(
+      x = water_treatment,
+      y = predicted,
+      ymin = conf.low,
+      ymax = conf.high,
+      color = water_treatment),
+    width = 0) +
   # underlying data
-  geom_point(data = drought_exp_clean,
-             aes(x = water_treatment,
-                 y = total_g,
-                 color = water_treatment),
-                  alpha = 0.1,
-             size = 2) +
+  geom_point(
+    data = drought_exp_clean,
+    aes(x = water_treatment, y = total_g, color = water_treatment),
+    alpha = 0.1,
+    size = 2) +
   # creating different panels for species
-  facet_wrap(~species_name) +
+  facet_wrap( ~ species_name) +
   # cleaner theme & finalizing
   theme_classic() +
-   scale_color_manual(values = c("#A8BE74FF", "#BF7417FF")) +
+  scale_color_manual(values = c("#A8BE74FF", "#BF7417FF")) +
   labs(title = "Species and water treatment linear model", # title of plot
        x = "Water treatment", # x-axis name
        y = "Total biomass (g)") + # y-axis name
- theme(legend.position = "none")
-  
+  theme(legend.position = "none") # no legend
+
 ```
 
 ## d. caption
